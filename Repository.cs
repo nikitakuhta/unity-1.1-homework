@@ -133,11 +133,16 @@ namespace Homework_01
             Console.WriteLine($"Итого: {this.Workers.Count}\n");    // Сводный отчёт. Сколько работников распечатано
         }
 
+        private void DeleteWorker(Worker Worker)
+        {
+            this.Workers.RemoveAt(this.Workers.IndexOf(Worker));
+        }
+
         /// <summary>
         /// Метод, увольняющий работников с зарплатой больше заданной
         /// </summary>
         /// <param name="MaxSalary">Уровень зарплаты работника, которых нужно уволить</param>
-        public void DeleteWorkerBySalary(int MaxSalary)
+    public void DeleteWorkerBySalary(int MaxSalary)
         {
             this.Workers.RemoveAll(e => e.Salary > MaxSalary);//Удаление работников чья зарплата больше заданной MaxSalary
         }
@@ -149,6 +154,20 @@ namespace Homework_01
         public void DeleteWorkerByName(string CurrentName)
         {
             this.Workers.RemoveAll(e => e.FirstName == CurrentName);//Удаление работников чьё имя Удовлетворяет выбранному CurrentName
+        }
+
+        private void FireRandomWorker()
+        {
+            var randomWorker = this.Workers[Repository.randomize.Next(this.Workers.Count)];
+            this.DeleteWorker(randomWorker);
+        }
+
+        public void FireUntilCount(int WorkersLimit)
+        {
+            while (this.Workers.Count > WorkersLimit)
+            {
+                this.FireRandomWorker();
+            }
         }
     }
 }
